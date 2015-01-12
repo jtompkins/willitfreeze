@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import LocationService from './locationService';
+import LocationService from 'lib/locationService';
 
 const API_KEY = '0f9abf3de31cd1840ae2678512ec1b07';
 
