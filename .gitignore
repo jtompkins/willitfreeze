@@ -28,6 +28,11 @@ local.properties
 # PDT-specific
 .buildpath
 
+#################
+## JSPM Packages 
+#################
+
+jspm_packages/*
 
 #################
 ## Visual Studio

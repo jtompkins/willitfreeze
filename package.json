@@ -1,0 +1,8 @@
+{
+  "jspm": {
+    "dependencies": {
+      "jquery": "^2.1.3",
+      "jsonp": "npm:jsonp@^0.1.0"
+    }
+  }
+}
