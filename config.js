@@ -12,6 +12,7 @@ System.config({
     "format": "npm:format@0.2.1",
     "jquery": "github:components/jquery@2.1.3",
     "jsonp": "npm:jsonp@0.1.0",
+    "knockout": "npm:knockout@3.2.0",
     "github:jspm/nodelibs-fs@0.1.0": {
       "assert": "npm:assert@1.3.0",
       "fs": "github:jspm/nodelibs-fs@0.1.0"
@@ -44,6 +45,9 @@ System.config({
     },
     "npm:jsonp@0.1.0": {
       "debug": "npm:debug@2.1.1"
+    },
+    "npm:knockout@3.2.0": {
+      "process": "github:jspm/nodelibs-process@0.1.0"
     },
     "npm:util@0.10.3": {
       "inherits": "npm:inherits@2.0.1",
