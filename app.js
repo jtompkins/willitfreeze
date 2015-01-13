@@ -25,8 +25,8 @@ class AppViewModel {
 
 		locationService.getGeolocation()
 					.then((location) => {
-				 		var forecastTask = forecastService.getForecast(location);
-				 		var cityTask = locationService.getAddress(location);
+				 		let forecastTask = forecastService.getForecast(location);
+				 		let cityTask = locationService.getAddress(location);
 
 				 		return Promise.all([forecastTask, cityTask]);
 				 	})
