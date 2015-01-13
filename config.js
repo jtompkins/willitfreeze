@@ -9,6 +9,7 @@ System.config({
 
 System.config({
   "map": {
+    "format": "npm:format@0.2.1",
     "jquery": "github:components/jquery@2.1.3",
     "jsonp": "npm:jsonp@0.1.0",
     "github:jspm/nodelibs-fs@0.1.0": {
@@ -34,6 +35,9 @@ System.config({
       "process": "github:jspm/nodelibs-process@0.1.0",
       "tty": "github:jspm/nodelibs-tty@0.1.0",
       "util": "github:jspm/nodelibs-util@0.1.0"
+    },
+    "npm:format@0.2.1": {
+      "process": "github:jspm/nodelibs-process@0.1.0"
     },
     "npm:inherits@2.0.1": {
       "util": "github:jspm/nodelibs-util@0.1.0"
