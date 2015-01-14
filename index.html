@@ -4,24 +4,41 @@
   <head>
     <meta charset="utf-8">
 
-    <title>title</title>
+    <title>Will it Freeze?</title>
 
-    <style>
-      html, body {
-        margin: 0;
-        border: 0;
-        padding: 0;
+    <link rel="stylesheet" type="text/css" href="jspm_packages/npm/normalize.css@3.0.2/normalize.css">
+    <link href='http://fonts.googleapis.com/css?family=Playfair+Display:400,700,900,400italic,900italic' rel='stylesheet' type='text/css'>
 
-        background-repeat: no-repeat;
-        background-size: cover;
-      }
-    </style>
+    <link rel="stylesheet" type="text/css" rel="stylesheet" href="styles.css">
   </head>
 
-  <body data-bind="style: { backgroundImage: photoCss() }">
-		<div id="city" data-bind="text: city"></div>
-		<div id="todaysLow" data-bind="text: todaysLow"></div>
-		<div id="tomorrowsLow" data-bind="text: tomorrowsLow"></div>
+  <body>
+    <div id="image-background" data-bind="visible: !isBusy(), style: { backgroundImage: photoCss() }"></div>
+
+    <div id="page-content">
+      <div id="masthead">
+        <h1>Will it freeze tonight in <span data-bind="text: city">your town</span>?</h1>
+        <h2>Data and images by <span class="forecastio">Forecast.IO</span> &amp; <span class="flickr">Flickr</span></h2>
+      </div>
+
+      <div id="data" data-bind="visible: !isBusy()">
+        <div id="freeze" data-bind="text: freeze"></div>
+
+        <div id="temps">
+          <div class="temp" id="today">
+            <span data-bind="html: todaysLow"></span>
+
+            <h2>Today</h2>
+          </div>
+
+          <div class="temp" id="tomorrow">
+            <span data-bind="html: tomorrowsLow"></span>
+
+            <h2>Tomorrow</h2>
+          </div>
+        </div>
+      </div>
+    </div>
 
 		<script src="jspm_packages/system.js"></script>
 		<script src="config.js"></script>

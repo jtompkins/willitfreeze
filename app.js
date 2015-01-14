@@ -15,7 +15,9 @@ class AppViewModel {
 		this.todaysLow = ko.observable(0.0);
 		this.tomorrowsLow = ko.observable(0.0);
 
-		this.city = ko.observable('');
+		this.freeze = ko.observable('No');
+
+		this.city = ko.observable('your town');
 		this.photo = ko.observable('');
 
 		this.photoCss = ko.computed(() => {
@@ -41,8 +43,16 @@ class AppViewModel {
  		let today = forecast.daily.data[0];
  		let tomorrow = forecast.daily.data[1];
 
- 		this.todaysLow(today.temperatureMin);
- 		this.tomorrowsLow(tomorrow.temperatureMin);
+ 		let todayText = `${Math.floor(today.temperatureMin)}<sub>&deg;</sub>`;
+ 		let tomorrowText = `${Math.floor(tomorrow.temperatureMin)}<sub>&deg;</sub>`;
+
+ 		this.todaysLow(todayText);
+ 		this.tomorrowsLow(tomorrowText);
+
+ 		if (today.temperatureMin < 32 || tomorrow.temperatureMin < 32)
+ 			this.freeze('Yes');
+
+ 		this.isBusy(false);
 	}
 
 	load() {
@@ -60,6 +70,8 @@ class AppViewModel {
 		let locationService = new LocationService(Constants.BING_KEY);
 		let forecastService = new ForecastService(Constants.FORECAST_KEY);
 		let photoService = new PhotoService(Constants.FLICKR_KEY);
+
+		this.isBusy(true);
 
 		locationService.getGeolocation()
 					.then((location) => {
