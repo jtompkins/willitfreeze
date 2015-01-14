@@ -15,7 +15,7 @@ class AppViewModel {
 		this.todaysLow = ko.observable(0.0);
 		this.tomorrowsLow = ko.observable(0.0);
 
-		this.freeze = ko.observable('No');
+		this.freeze = ko.observable('Maybe');
 
 		this.city = ko.observable('your town');
 		this.photo = ko.observable('');
@@ -51,6 +51,8 @@ class AppViewModel {
 
  		if (today.temperatureMin < 32 || tomorrow.temperatureMin < 32)
  			this.freeze('Yes');
+ 		else
+ 			this.freeze('No');
 
  		this.isBusy(false);
 	}
@@ -100,6 +102,35 @@ class AppViewModel {
 				 	});
 	}
 }
+
+ko.bindingHandlers.crossFade = {
+	init: function(element, valueAccessor) {
+        // Initially set the element to be instantly visible/hidden depending on the value
+        let value = ko.unwrap(valueAccessor());
+
+        $(element).fadeOut();
+
+        $(element).toggle(ko.unwrap(value)); // Use "unwrapObservable" so we can handle values that may or may not be observable
+    },
+    update: function(element, valueAccessor) {
+        // Whenever the value subsequently changes, slowly fade the element in or out
+        var value = valueAccessor();
+        ko.unwrap(value) ? $(element).fadeIn() : $(element).fadeOut();
+    }
+};
+
+ko.bindingHandlers.fadeVisible = {
+    init: function(element, valueAccessor) {
+        // Initially set the element to be instantly visible/hidden depending on the value
+        var value = valueAccessor();
+        $(element).toggle(ko.unwrap(value)); // Use "unwrapObservable" so we can handle values that may or may not be observable
+    },
+    update: function(element, valueAccessor) {
+        // Whenever the value subsequently changes, slowly fade the element in or out
+        var value = valueAccessor();
+        ko.unwrap(value) ? $(element).fadeIn() : $(element).fadeOut();
+    }
+};
 
 $(() => {
 	ko.applyBindings(new AppViewModel());

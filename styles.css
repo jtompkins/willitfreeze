@@ -64,7 +64,7 @@ body {
   font-style: italic;
 
   line-height: 15rem;
-  letter-spacing: -3rem;
+  letter-spacing: 0rem;
 
   -webkit-flex-basis: auto;
 }

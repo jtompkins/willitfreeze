@@ -13,7 +13,7 @@
   </head>
 
   <body>
-    <div id="image-background" data-bind="visible: !isBusy(), style: { backgroundImage: photoCss() }"></div>
+    <div id="image-background" data-bind="fadeVisible: !isBusy(), style: { backgroundImage: photoCss() }"></div>
 
     <div id="page-content">
       <div id="masthead">
@@ -21,10 +21,10 @@
         <h2>Data and images by <span class="forecastio">Forecast.IO</span> &amp; <span class="flickr">Flickr</span></h2>
       </div>
 
-      <div id="data" data-bind="visible: !isBusy()">
-        <div id="freeze" data-bind="text: freeze"></div>
+      <div id="data">
+        <div id="freeze" data-bind="text: freeze">Maybe</div>
 
-        <div id="temps">
+        <div id="temps" style="display: none" data-bind="fadeVisible: !isBusy()">
           <div class="temp" id="today">
             <span data-bind="html: todaysLow"></span>
 
