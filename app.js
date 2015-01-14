@@ -47,13 +47,13 @@ class AppViewModel {
 		locationService.getGeolocation()
 					.then((location) => {
 				 		let forecastTask = forecastService.getForecast(location);
-				 		let cityTask = locationService.getAddress(location);
+				 		let addressTask = locationService.getAddress(location);
 
-				 		return Promise.all([forecastTask, cityTask]);
+				 		return Promise.all([addressTask, forecastTask]);
 				 	})
 				 	.then((data) => {
-				 		let forecast = data[0];
-				 		let address = data[1];
+				 		let address = data[0];
+				 		let forecast = data[1];
 
 				 		this.populate(address, forecast);
 				 	});
