@@ -5,9 +5,20 @@
     <meta charset="utf-8">
 
     <title>title</title>
+
+    <style>
+      html, body {
+        margin: 0;
+        border: 0;
+        padding: 0;
+
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+    </style>
   </head>
 
-  <body>
+  <body data-bind="style: { backgroundImage: photoCss() }">
 		<div id="city" data-bind="text: city"></div>
 		<div id="todaysLow" data-bind="text: todaysLow"></div>
 		<div id="tomorrowsLow" data-bind="text: tomorrowsLow"></div>
