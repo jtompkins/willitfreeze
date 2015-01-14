@@ -1,11 +1,10 @@
 import $ from 'jquery';
 import ko from 'knockout';
 
+import * as Constants from 'lib/constants';
+
 import LocationService from 'lib/locationService';
 import ForecastService from 'lib/forecastService';
-
-const FORECAST_KEY = '0f9abf3de31cd1840ae2678512ec1b07';
-const BING_KEY = 'Ap_46PGiEwOhWsR44SoFoYUO9_XaMRgXf7TdLHcU_6hWa3Br6hiV3fESATe9GtAh';
 
 class AppViewModel {
 	constructor() {
@@ -20,8 +19,8 @@ class AppViewModel {
 	}
 
 	load() {
-		let locationService = new LocationService(BING_KEY);
-		let forecastService = new ForecastService(FORECAST_KEY);
+		let locationService = new LocationService(Constants.BING_KEY);
+		let forecastService = new ForecastService(Constants.FORECAST_KEY);
 
 		locationService.getGeolocation()
 					.then((location) => {
