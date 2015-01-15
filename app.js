@@ -79,7 +79,7 @@ class AppViewModel {
 		let savedPhotos = storageService.get(Constants.SAVED_PHOTOS_KEY);
 
 		if (savedAddress && savedForecast && savedPhotos) {
-			this.populate(savedAddress, savedForecast);
+			this.populate(savedAddress, savedForecast, savedPhotos);
 
 			return;
 		}
