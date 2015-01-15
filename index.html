@@ -20,13 +20,19 @@
         <h2>Data and images by <span class="forecastio">Forecast.IO</span> &amp; <span class="flickr">Flickr</span></h2>
       </div>
 
+      <div id="error-indicator" style="display: none" data-bind="visible: (!isBusy()) && hasError()">
+        <h2>Oops!</h2>
+
+        <h3>We couldn't find weather information for your location. Please try again later!</h3>
+      </div>
+
       <div id="loading-indicator" data-bind="visible: isBusy()">
         <div class="loader"></div>
 
         Checking the weather&#8230;
       </div>
 
-      <div id="data" style="display: none" data-bind="visible: !isBusy()">
+      <div id="data" style="display: none" data-bind="visible: (!isBusy()) && (!hasError())">
         <div id="freeze" data-bind="text: freeze"></div>
 
         <div id="temps">
@@ -49,8 +55,19 @@
       </div>
     </div>
 
-		<!-- <script src="jspm_packages/system.js"></script> -->
-    <script src="traceur-runtime.js"></script>
-    <script src="build.js"></script>
+    <!-- DEV -->
+    <!-- <script src="jspm_packages/system.js"></script>
+    <script src="config.js"></script>
+
+    <script>
+      System.import('app');
+    </script> -->
+
+    <!-- PRODUCTION -->
+    <!-- to generate build.js, run: jspm bundle-sfx --minify app output/build.js -->
+
+    <script src="output/traceur-runtime.js"></script>
+    <script src="output/build.js"></script>
+
   </body>
 </html>

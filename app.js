@@ -11,6 +11,7 @@ import PhotoService from 'lib/photoService';
 class AppViewModel {
 	constructor() {
 		this.isBusy = ko.observable(false);
+		this.hasError = ko.observable(false);
 
 		this.todaysLow = ko.observable(0.0);
 		this.tomorrowsLow = ko.observable(0.0);
@@ -38,24 +39,28 @@ class AppViewModel {
 	}
 
 	populate(address, forecast, photos) {
-		if (address)
-			this.city(address.locality);
+		if (!address || !forecast) {
+			this.hasError(true);
+			this.isBusy(false);
 
-		if (forecast) {
-			let today = forecast.daily.data[0];
-			let tomorrow = forecast.daily.data[1];
-
-			let todayText = `${Math.floor(today.temperatureMin)}<sub>&deg;</sub>`;
-			let tomorrowText = `${Math.floor(tomorrow.temperatureMin)}<sub>&deg;</sub>`;
-
-			this.todaysLow(todayText);
-			this.tomorrowsLow(tomorrowText);
-
-			if (today.temperatureMin < 32 || tomorrow.temperatureMin < 32)
-				this.freeze('Yes');
-			else
-				this.freeze('No');
+			return;
 		}
+
+		this.city(address.locality);
+
+		let today = forecast.daily.data[0];
+		let tomorrow = forecast.daily.data[1];
+
+		let todayText = `${Math.floor(today.temperatureMin)}<sub>&deg;</sub>`;
+		let tomorrowText = `${Math.floor(tomorrow.temperatureMin)}<sub>&deg;</sub>`;
+
+		this.todaysLow(todayText);
+		this.tomorrowsLow(tomorrowText);
+
+		if (today.temperatureMin < 32 || tomorrow.temperatureMin < 32)
+			this.freeze('Yes');
+		else
+			this.freeze('No');
 
  		if (photos) {
 	 		let photo = this.pickRandomPhoto(photos);
@@ -67,6 +72,8 @@ class AppViewModel {
 		 		this.photo(photoUrl);
 		 	}
 		}
+		else
+			this.photo('');
 
  		this.isBusy(false);
 	}
@@ -82,6 +89,7 @@ class AppViewModel {
 	}
 
 	load() {
+		this.hasError(false);
 		this.isBusy(true);
 
 		let storageService = new StorageService(Constants.LOCAL_STORAGE_EXPIRATION);
@@ -107,6 +115,9 @@ class AppViewModel {
 				 		let photoTask = photoService.getPhotos(location);
 
 				 		return Promise.all([addressTask, forecastTask, photoTask]);
+				 	}, (err) => {
+				 		this.isBusy(false);
+				 		this.hasError(true);
 				 	})
 				 	.then((data) => {
 				 		let address = data[0];
@@ -122,7 +133,11 @@ class AppViewModel {
 				 		if (photos)
 				 			storageService.set(Constants.SAVED_PHOTOS_KEY, photos);
 
-				 		this.populate(address, forecast, photos);
+				 		if (!this.hasError())
+					 		this.populate(address, forecast, photos);
+				 	}, (err) => {
+				 		this.isBusy(false);
+				 		this.hasError(true);
 				 	});
 	}
 }

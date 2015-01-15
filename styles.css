@@ -63,7 +63,7 @@ body {
   align-self: flex-start;
 }
 
-#data, #loading-indicator {
+#data, #loading-indicator, #error-indicator {
   -webkit-flex-grow: 1;
   flex-grow: 1;
 
@@ -84,6 +84,17 @@ body {
   font-size: 2rem;
   font-weight: 400;
   font-style: italic;
+}
+
+#error-indicator h2 {
+  font-size: 5rem;
+  font-weight: 900;
+  font-style: italic;
+}
+
+#error-indicator h3 {
+  font-size: 1rem;
+  font-weight: 400;
 }
 
 #freeze {
