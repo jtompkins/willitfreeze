@@ -71,7 +71,19 @@ class AppViewModel {
  		this.isBusy(false);
 	}
 
+	refresh() {
+		let storageService = new StorageService(Constants.LOCAL_STORAGE_EXPIRATION);
+
+		storageService.remove(Constants.SAVED_ADDRESS_KEY);
+		storageService.remove(Constants.SAVED_FORECAST_KEY);
+		storageService.remove(Constants.SAVED_PHOTOS_KEY);
+
+		this.load();
+	}
+
 	load() {
+		this.isBusy(true);
+
 		let storageService = new StorageService(Constants.LOCAL_STORAGE_EXPIRATION);
 
 		let savedAddress = storageService.get(Constants.SAVED_ADDRESS_KEY);
@@ -87,8 +99,6 @@ class AppViewModel {
 		let locationService = new LocationService(Constants.BING_KEY);
 		let forecastService = new ForecastService(Constants.FORECAST_KEY);
 		let photoService = new PhotoService(Constants.FLICKR_KEY);
-
-		this.isBusy(true);
 
 		locationService.getGeolocation()
 					.then((location) => {

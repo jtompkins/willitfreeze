@@ -13,6 +13,8 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+
+  font-family: 'Playfair Display', serif;
 }
 
 #image-background {
@@ -74,7 +76,6 @@ body {
 }
 
 #loading-indicator {
-  font-family: 'Playfair Display', serif;
   font-size: 2rem;
   font-weight: 400;
   font-style: italic;
@@ -83,7 +84,6 @@ body {
 #freeze {
   margin-top: -3rem;
 
-  font-family: 'Playfair Display', serif;
   font-size: 20rem;
   font-weight: 900;
   font-style: italic;
@@ -97,7 +97,6 @@ body {
 h1 {
   margin: 0;
 
-  font-family: 'Playfair Display', serif;
   font-size: 1.5rem;
   font-weight: 900;
 }
@@ -105,7 +104,6 @@ h1 {
 h2 {
   margin: 0;
 
-  font-family: 'Playfair Display', serif;
   font-size: 1rem;
   font-weight: 400;
 }
@@ -150,13 +148,24 @@ h2 {
 }
 
 .temp span {
-  font-family: 'Playfair Display', serif;
   font-size: 4rem;
 }
 
 .temp h2 {
   font-weight: 400;
   text-align: center;
+}
+
+#refresh {
+  margin-bottom: 1rem;
+
+  font-size: .75em;
+  font-weight: 400;
+  font-style: italic;
+
+  color: #ff0084;
+
+  cursor: pointer;
 }
 
 .loader {

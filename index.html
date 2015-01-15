@@ -43,6 +43,10 @@
           </div>
         </div>
       </div>
+
+      <div id="refresh" style="display: none" data-bind="visible: !isBusy(), click: refresh">
+        Not in <span data-bind="text: city"></span>? Refresh your data!
+      </div>
     </div>
 
 		<script src="jspm_packages/system.js"></script>
