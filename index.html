@@ -6,8 +6,7 @@
 
     <title>Will it Freeze?</title>
 
-    <link rel="stylesheet" type="text/css" href="jspm_packages/npm/normalize.css@3.0.2/normalize.css">
-    <link href='http://fonts.googleapis.com/css?family=Playfair+Display:400,700,900,400italic,900italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Playfair+Display:400,900,400italic,900italic' rel='stylesheet' type='text/css'>
 
     <link rel="stylesheet" type="text/css" rel="stylesheet" href="styles.css">
   </head>
@@ -21,10 +20,16 @@
         <h2>Data and images by <span class="forecastio">Forecast.IO</span> &amp; <span class="flickr">Flickr</span></h2>
       </div>
 
-      <div id="data">
-        <div id="freeze" data-bind="text: freeze">Maybe</div>
+      <div id="loading-indicator" data-bind="visible: isBusy()">
+        <div class="loader"></div>
 
-        <div id="temps" style="display: none" data-bind="fadeVisible: !isBusy()">
+        Checking the weather&#8230;
+      </div>
+
+      <div id="data" style="display: none" data-bind="visible: !isBusy()">
+        <div id="freeze" data-bind="text: freeze"></div>
+
+        <div id="temps">
           <div class="temp" id="today">
             <span data-bind="html: todaysLow"></span>
 

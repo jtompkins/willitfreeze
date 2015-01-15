@@ -15,7 +15,7 @@ class AppViewModel {
 		this.todaysLow = ko.observable(0.0);
 		this.tomorrowsLow = ko.observable(0.0);
 
-		this.freeze = ko.observable('Maybe');
+		this.freeze = ko.observable('');
 
 		this.city = ko.observable('your town');
 		this.photo = ko.observable('');
@@ -37,22 +37,36 @@ class AppViewModel {
 		return photos[index];
 	}
 
-	populate(address, forecast) {
-		this.city(address.locality);
+	populate(address, forecast, photos) {
+		if (address)
+			this.city(address.locality);
 
- 		let today = forecast.daily.data[0];
- 		let tomorrow = forecast.daily.data[1];
+		if (forecast) {
+			let today = forecast.daily.data[0];
+			let tomorrow = forecast.daily.data[1];
 
- 		let todayText = `${Math.floor(today.temperatureMin)}<sub>&deg;</sub>`;
- 		let tomorrowText = `${Math.floor(tomorrow.temperatureMin)}<sub>&deg;</sub>`;
+			let todayText = `${Math.floor(today.temperatureMin)}<sub>&deg;</sub>`;
+			let tomorrowText = `${Math.floor(tomorrow.temperatureMin)}<sub>&deg;</sub>`;
 
- 		this.todaysLow(todayText);
- 		this.tomorrowsLow(tomorrowText);
+			this.todaysLow(todayText);
+			this.tomorrowsLow(tomorrowText);
 
- 		if (today.temperatureMin < 32 || tomorrow.temperatureMin < 32)
- 			this.freeze('Yes');
- 		else
- 			this.freeze('No');
+			if (today.temperatureMin < 32 || tomorrow.temperatureMin < 32)
+				this.freeze('Yes');
+			else
+				this.freeze('No');
+		}
+
+ 		if (photos) {
+	 		let photo = this.pickRandomPhoto(photos);
+
+	 		if(photo) {
+	 			let photoService = new PhotoService(Constants.FLICKR_KEY);
+		 		let photoUrl = photoService.getPhotoUrl(photo);
+
+		 		this.photo(photoUrl);
+		 	}
+		}
 
  		this.isBusy(false);
 	}
@@ -62,8 +76,9 @@ class AppViewModel {
 
 		let savedAddress = storageService.get(Constants.SAVED_ADDRESS_KEY);
 		let savedForecast = storageService.get(Constants.SAVED_FORECAST_KEY);
+		let savedPhotos = storageService.get(Constants.SAVED_PHOTOS_KEY);
 
-		if (savedAddress && savedForecast) {
+		if (savedAddress && savedForecast && savedPhotos) {
 			this.populate(savedAddress, savedForecast);
 
 			return;
@@ -88,36 +103,19 @@ class AppViewModel {
 				 		let forecast = data[1];
 				 		let photos = data[2];
 
-				 		if (photos) {
-					 		let photo = this.pickRandomPhoto(photos);
+				 		if (address)
+				 			storageService.set(Constants.SAVED_ADDRESS_KEY, address);
 
-					 		if(photo) {
-						 		let photoUrl = photoService.getPhotoUrl(photo);
+				 		if (forecast)
+				 			storageService.set(Constants.SAVED_FORECAST_KEY, forecast);
 
-						 		this.photo(photoUrl);
-						 	}
-				 		}
+				 		if (photos)
+				 			storageService.set(Constants.SAVED_PHOTOS_KEY, photos);
 
-				 		this.populate(address, forecast);
+				 		this.populate(address, forecast, photos);
 				 	});
 	}
 }
-
-ko.bindingHandlers.crossFade = {
-	init: function(element, valueAccessor) {
-        // Initially set the element to be instantly visible/hidden depending on the value
-        let value = ko.unwrap(valueAccessor());
-
-        $(element).fadeOut();
-
-        $(element).toggle(ko.unwrap(value)); // Use "unwrapObservable" so we can handle values that may or may not be observable
-    },
-    update: function(element, valueAccessor) {
-        // Whenever the value subsequently changes, slowly fade the element in or out
-        var value = valueAccessor();
-        ko.unwrap(value) ? $(element).fadeIn() : $(element).fadeOut();
-    }
-};
 
 ko.bindingHandlers.fadeVisible = {
     init: function(element, valueAccessor) {
