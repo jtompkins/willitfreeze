@@ -8,7 +8,7 @@ html, body {
 }
 
 body {
-  background-image: url("assets/sky.jpg");
+  background-image: url("assets/default-bg.jpg");
 
   background-repeat: no-repeat;
   background-size: cover;
